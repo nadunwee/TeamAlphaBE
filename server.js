@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const teamRouter = require("./routes/teamRouter");
+const transactionRouter = require("./routes/transactionRouter");
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/team", teamRouter);
+app.use("/api/transaction", transactionRouter);
 
 //connect to db
 mongoose

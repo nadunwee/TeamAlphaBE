@@ -38,4 +38,36 @@ const getTeam = async (req, res) => {
   }
 };
 
-module.exports = { loginTeam, getTeam };
+const updateCoins = async (req, res) => {
+  const { team_name, coins } = req.body;
+
+  console.log(team_name, coins);
+
+  try {
+    if (!team_name || coins === undefined) {
+      throw new Error("Team ID and new coin value are required");
+    }
+
+    const team = await Team.findOne({ team_name });
+    if (!team) {
+      throw new Error("Team not found");
+    }
+
+    // Convert existing and new coins to integers and add them
+    const currentCoins = parseInt(team.coins) || 0;
+    const newCoins = parseInt(coins);
+    const updatedCoins = currentCoins + newCoins;
+
+    // Update and save
+    team.coins = updatedCoins.toString(); // Convert back to string if needed
+    await team.save();
+
+    res
+      .status(200)
+      .json({ message: "Coins updated successfully", coins: team.coins });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+module.exports = { loginTeam, getTeam, updateCoins };
