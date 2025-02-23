@@ -16,6 +16,30 @@ const teamSchema = new Schema({
     type: String,
     require: true,
   },
+  unlocked_clues: [
+    {
+      clue_name: {
+        type: String, // The name of the clue
+        required: true,
+      },
+      coins_spent: {
+        type: Number, // The number of coins spent to unlock the clue
+        required: true,
+      },
+    },
+  ],
+  team_members: [
+    {
+      name: {
+        type: String,
+        required: true,
+      },
+      position: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
 });
 
 // static login method
